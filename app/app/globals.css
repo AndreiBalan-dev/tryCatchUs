@@ -8,6 +8,34 @@
   }
 }
 
+/* Custom font size for Press Start 2P */
 .font-press-start {
-  font-size: 0.5rem;
+  font-size: 0.875rem; /* Adjust this value as needed */
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbars */
+html,
+body {
+  overflow: hidden;
+}
+
+body,
+main {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar,
+main::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+body {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
 }
