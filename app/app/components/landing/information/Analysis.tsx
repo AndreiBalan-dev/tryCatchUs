@@ -1,17 +1,17 @@
 import React from "react";
 
-const Contact = () => {
+const Analysis = () => {
   return (
     <section
-      id="contact"
+      id="analysis"
       className="h-screen flex flex-col items-center justify-center text-center"
     >
-      <h2 className="text-4xl font-bold mb-4">Contact Us</h2>
+      <h2 className="text-4xl font-bold mb-4">Analysis</h2>
       <p className="text-lg mb-8">
-        Get in touch with our team for more information.
+        In-depth analysis of the events and athletes.
       </p>
     </section>
   );
 };
 
-export default Contact;
+export default Analysis;
