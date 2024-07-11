@@ -1,4 +1,3 @@
-// app/page.tsx
 import React from "react";
 import Landing from "./components/Landing";
 
