@@ -8,13 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        'press-start': ['"Press Start 2P"', 'sans-serif'],
+      },
+      colors: {
+        primaryBackground: "#001524",
+        primaryText: "#FAFAFF",
+        primaryButton: "#273469",
+        primaryButtonHover: "#1E2749",
       },
     },
   },
   plugins: [],
 };
+
 export default config;
