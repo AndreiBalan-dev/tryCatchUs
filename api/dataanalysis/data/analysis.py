@@ -76,15 +76,19 @@ class OlympicDataset(Dataset):
 class SimpleNN(nn.Module):
     def __init__(self):
         super(SimpleNN, self).__init__()
-        self.fc1 = nn.Linear(len(features), 64)
-        self.fc2 = nn.Linear(64, 32)
-        self.fc3 = nn.Linear(32, 1)
+        self.layers = nn.Sequential(
+            nn.Linear(len(features), 32),
+            nn.ReLU(),
+            nn.Linear(32, 16),
+            nn.ReLU(),
+            nn.Linear(16, 4),
+            nn.ReLU(),
+            nn.Linear(4,1)
+        )
     
     def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+        logits = self.layers(x)
+        return logits
 
 # Split the dataset
 X = merged_df[features].values
@@ -101,7 +105,7 @@ test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 model = SimpleNN().to(device)
 
 criterion = nn.MSELoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 for epoch in range(2):
     model.train()
