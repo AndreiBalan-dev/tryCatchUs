@@ -1,5 +1,5 @@
-"use client"
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import apiConfig from "../../apiConfig.json";
 
 interface Athlete {
@@ -13,36 +13,42 @@ interface DataResponse {
   sports: string[];
 }
 
+interface AthletesData {
+  total: number;
+}
+
 const TokyoOlympicsAnalysis = () => {
-  const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [totalAthletes, setTotalAthletes] = useState<number | null>(null);
   const [countries, setCountries] = useState<string[]>([]);
   const [sports, setSports] = useState<string[]>([]);
   const [selectedSport, setSelectedSport] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<string>("");
-  const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
 
   const fetchData = async () => {
     const resp = await fetch(`${apiConfig.api}/2021/get/athletes`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
     const data: DataResponse = await resp.json();
-    
+
     setCountries(data.countries);
     setSports(data.sports);
-    // Fetch athletes only once both filters are set
+    // Fetch athletes count only once both filters are set
     if (selectedSport && selectedCountry) {
-      const athletesResp = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
+      const athletesResp = await fetch(
+        `${apiConfig.api}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
-      const athletesData: Athlete[] = await athletesResp.json();
-      setAthletes(athletesData);
-      setFilteredAthletes(athletesData);
+      );
+      const athletesData: AthletesData = await athletesResp.json();
+      console.log(athletesData);
+      setTotalAthletes(athletesData.total);
     }
   };
 
@@ -51,48 +57,59 @@ const TokyoOlympicsAnalysis = () => {
   }, [selectedSport, selectedCountry]);
 
   return (
-    <div className='flex h-full bg-primaryBackground text-black'>
-      <div className='w-1/3 p-4'>
+    <div className="flex h-full bg-primaryBackground text-primaryText">
+      <div className="w-1/3 p-4">
         <div>
-          <label htmlFor="sports" className="block text-sm font-medium text-gray-700">Select a Sport</label>
+          <label
+            htmlFor="sports"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select a Sport
+          </label>
           <select
             id="sports"
             value={selectedSport}
             onChange={(e) => setSelectedSport(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            className="text-black mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
             <option value="">-- Select a Sport --</option>
             {sports.map((sport, index) => (
-              <option key={index} value={sport}>{sport}</option>
+              <option key={index} value={sport}>
+                {sport}
+              </option>
             ))}
           </select>
         </div>
-        <div className='mt-4'>
-          <label htmlFor="countries" className="block text-sm font-medium text-gray-700">Select a Country</label>
+        <div className="mt-4">
+          <label
+            htmlFor="countries"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select a Country
+          </label>
           <select
             id="countries"
             value={selectedCountry}
             onChange={(e) => setSelectedCountry(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            className="text-black mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
             <option value="">-- Select a Country --</option>
             {countries.map((country, index) => (
-              <option key={index} value={country}>{country}</option>
+              <option key={index} value={country}>
+                {country}
+              </option>
             ))}
           </select>
         </div>
       </div>
-      <div className='w-2/3 p-4'>
-        {filteredAthletes.length > 0 && (
+      <div className="w-2/3 p-4">
+        {totalAthletes !== null && (
           <div>
-            <h2 className='text-xl font-bold'>Athletes Information</h2>
-            <ul>
-              {filteredAthletes.map((athlete, index) => (
-                <li key={index}>
-                  <strong>Name:</strong> {athlete.name}, <strong>Sport:</strong> {athlete.sport}, <strong>Country:</strong> {athlete.country}
-                </li>
-              ))}
-            </ul>
+            <h2 className="text-xl font-bold">Athletes Information</h2>
+            <p>
+              <strong>Total Athletes:</strong> {totalAthletes} athletes from{" "}
+              {selectedCountry} participating in {selectedSport}.
+            </p>
           </div>
         )}
       </div>
