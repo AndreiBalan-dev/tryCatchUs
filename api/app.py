@@ -1,5 +1,6 @@
 import torch
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routes import tokyo_olympics, paris_olympics
 from models.model import OlympicPredictorNN
 
@@ -7,6 +8,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(tokyo_olympics.router, prefix="/2021", tags=['Tokyo Olympics'])
 app.include_router(paris_olympics.router, prefix="/2024", tags=['Paris Olympics'])
 
