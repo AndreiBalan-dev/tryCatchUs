@@ -111,7 +111,7 @@ const Predictions = () => {
     if (!countryData) return;
 
     try {
-      const response = await axios.get("${apiConfig.api}/predict", {
+      const response = await axios.get(`${apiConfig.api}/predict`, {
         params: {
           total_athletes: countryData.total_athletes,
           total_medals: countryData.total_medals,
@@ -188,7 +188,9 @@ const Predictions = () => {
         </div>
         <div className="mt-8 md:mt-16">
           <p>Click the button below!</p>
-          <Link href="${apiConfig.api}/docs#/default/predict_score_predict_get">
+          <Link
+            href={`${apiConfig.api}/docs#/default/predict_score_predict_get`}
+          >
             <button className="mt-4 md:mt-10 bg-primaryButton border-primaryButton cursor-pointer text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 animate__animated animate__pulse">
               Open Predictor
             </button>
