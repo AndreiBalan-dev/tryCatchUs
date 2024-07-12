@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   TooltipProvider,
@@ -9,12 +9,19 @@ import {
 } from "@radix-ui/react-tooltip";
 import "animate.css";
 import "../../styles/dialogbox.css";
+import { useInView } from "../../hooks/useInView";
 
-const Hero = () => {
+type HeroProps = {
+  scrollToRef: React.RefObject<HTMLElement>;
+};
+
+const Hero: React.FC<HeroProps> = ({ scrollToRef }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [triggerAgain, setTriggerAgain] = useState(false);
   const [lastIndex, setLastIndex] = useState(-1);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   const getRandomMessage = (lastIndex: number) => {
     const messagesArray = [
@@ -50,6 +57,19 @@ const Hero = () => {
     }
   }, [isDialogOpen, triggerAgain]);
 
+  useEffect(() => {
+    if (isInView) {
+      const heroButton = document.getElementById("heroButton");
+      if (heroButton) {
+        setTimeout(() => {
+          heroButton.classList.remove("animate__animated");
+          heroButton.classList.remove("animate__pulse");
+          heroButton.classList.remove("animate__infinite");
+        }, 6800);
+      }
+    }
+  }, [isInView]);
+
   const handleDialog = () => {
     setMessage("");
     setTriggerAgain(!triggerAgain);
@@ -60,6 +80,7 @@ const Hero = () => {
     setMessage("");
     setIsDialogOpen(false);
   };
+
   useEffect(() => {
     function handleResize() {
       const dialogBox = document.getElementById("dialogBox");
@@ -86,10 +107,19 @@ const Hero = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isDialogOpen]);
 
+  const scrollToAnalysis = () => {
+    if (scrollToRef.current) {
+      scrollToRef.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.error("scrollToRef is not attached to any element.");
+    }
+  };
+
   return (
     <TooltipProvider delayDuration={0}>
       <section
-        id="home"
+        ref={sectionRef}
+        id="hero"
         className="h-screen flex flex-col items-center justify-center text-center p-4 md:p-8"
       >
         <Tooltip>
@@ -106,7 +136,7 @@ const Hero = () => {
                   </div>
                 )}
                 <Image
-                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mb-4 sm:mb-6 md:mb-8 rounded-full shadow-lg border-4 border-white transition-transform duration-300 ease-in-out transform group-hover:scale-110 cursor-pointer"
+                  className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mb-4 sm:mb-6 md:mb-8 rounded-full shadow-lg border-4 border-white transition-transform duration-300 ease-in-out transform group-hover:scale-110 cursor-pointer animate__animated delay-1 animate__bounceIn"
                   src="/character.jpeg"
                   width={512}
                   height={512}
@@ -125,13 +155,27 @@ const Hero = () => {
             Click to interact
           </TooltipContent>
         </Tooltip>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3 md:mb-4 text-white drop-shadow-lg">
+        <h1
+          className={`text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3 md:mb-4 text-white drop-shadow-lg ${
+            isInView ? "animate__animated animate__fadeInDown" : ""
+          }`}
+        >
           Welcome to RPG Olympics!
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl text-center mb-4 sm:mb-6 md:mb-8 text-white drop-shadow-md">
+        <p
+          className={`text-lg sm:text-xl md:text-2xl text-center mb-4 sm:mb-6 md:mb-8 text-white drop-shadow-md ${
+            isInView ? "animate__animated animate__fadeInUp" : ""
+          }`}
+        >
           Ready for the olympics? Get some insights
         </p>
-        <button className="bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105">
+        <button
+          id="heroButton"
+          onClick={scrollToAnalysis}
+          className={`bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 ${
+            isInView ? "animate__animated animate__pulse animate__infinite" : ""
+          }`}
+        >
           Start Adventure
         </button>
       </section>
