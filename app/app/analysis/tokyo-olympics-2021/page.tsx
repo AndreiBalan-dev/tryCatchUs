@@ -90,7 +90,6 @@ const TokyoOlympicsAnalysis = () => {
         }
       );
       const athletesData: AthletesData = await athletesResp.json();
-      console.log(athletesData);
       setTotalAthletes(athletesData.total);
 
       const coachesResp = await fetch(
@@ -103,7 +102,6 @@ const TokyoOlympicsAnalysis = () => {
         }
       );
       const coachesData: CoachesData = await coachesResp.json();
-      console.log(coachesData);
       setTotalCoaches(coachesData.total);
 
       const gendersResp = await fetch(
@@ -116,7 +114,6 @@ const TokyoOlympicsAnalysis = () => {
         }
       );
       const gendersData: GendersData = await gendersResp.json();
-      console.log(gendersData);
       setTotalGenders(gendersData.total);
 
       const medalsResp = await fetch(
@@ -129,7 +126,6 @@ const TokyoOlympicsAnalysis = () => {
         }
       );
       const medalsData: MedalsData = await medalsResp.json();
-      console.log(medalsData);
       setTotalMedals(medalsData.total);
     }
   };
@@ -333,7 +329,7 @@ const TokyoOlympicsAnalysis = () => {
           totalGenders !== null &&
           totalCoaches !== null &&
           totalAthletes !== null && (
-            <div className="mt-8 min-h-[600px] min-w-[600px] max-h-[600px] max-w-[600px]">
+            <div className="min-h-[300px] min-w-[300px] sm:min-h-[400px] sm:min-w-[400px] md:min-h-[600px] md:min-w-[600px] lg:min-h-[800px] lg:min-w-[800px] xl:min-h-[1000px] xl:min-w-[1000px]">
               <Bar data={data} options={options} />
             </div>
           )}

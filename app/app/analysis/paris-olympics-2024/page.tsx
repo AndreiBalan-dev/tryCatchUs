@@ -101,8 +101,10 @@ const ParisOlympicsAnalysis = () => {
           </div>
         )}
         {sportsData !== null && (
-          <div className="mt-8 min-h-[600px] min-w-[600px] max-h-[1000px] max-w-[1000px]">
-            <Bar data={data} options={options} />
+          <div className="mt-8">
+            <div className="min-h-[300px] min-w-[300px] sm:min-h-[400px] sm:min-w-[400px] md:min-h-[600px] md:min-w-[600px] lg:min-h-[800px] lg:min-w-[800px] xl:min-h-[1000px] xl:min-w-[1000px]">
+              <Bar data={data} options={options} />
+            </div>
           </div>
         )}
       </div>
