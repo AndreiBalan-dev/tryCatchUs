@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import apiConfig from "../../../apiConfig.json";
 
 interface Athlete {
   name: string;
@@ -17,7 +16,7 @@ const TokyoOlympicsAnalysis = () => {
   const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
 
   const fetchData = async () => {
-    const resp = await fetch(`${apiConfig.api}/2021/athletes`, {
+    const resp = await fetch(`${process.env.API_HOST}/2021/athletes`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
