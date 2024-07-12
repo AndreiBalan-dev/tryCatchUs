@@ -25,11 +25,7 @@ interface CountryData {
 }
 
 const Predictions = () => {
-  const images = [
-    "/analysis-image.jpg",
-    "/character.jpeg",
-    "/analysis-image.jpg",
-  ];
+  const images = ["/predict-1.jpg", "/predict-2.jpg", "/predict-3.jpg"];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sectionRef = useRef<HTMLElement | null>(null);
