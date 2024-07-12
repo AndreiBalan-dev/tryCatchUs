@@ -75,6 +75,7 @@ const Hero = () => {
       } else {
         dialogBox.classList.remove("bottom-40");
         dialogBox.classList.remove("-right-14");
+        dialogBox.classList.remove("-top-32");
         dialogBox.classList.add("left-full");
       }
     }
