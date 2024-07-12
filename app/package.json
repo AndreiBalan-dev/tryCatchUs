@@ -14,8 +14,10 @@
     "@radix-ui/react-navigation-menu": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "animate.css": "^4.1.1",
+    "chart.js": "^4.4.3",
     "next": "14.2.5",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18"
   },
   "devDependencies": {

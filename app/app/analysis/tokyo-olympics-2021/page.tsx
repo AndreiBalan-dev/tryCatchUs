@@ -1,6 +1,25 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import apiConfig from "../../apiConfig.json";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface Athlete {
   name: string;
@@ -151,9 +170,40 @@ const TokyoOlympicsAnalysis = () => {
     fetchData();
   }, [selectedSport, selectedCountry, selectedGender, selectedRank]);
 
+  const data = {
+    labels: ["Athletes", "Coaches", "Participants", "Medals"],
+    datasets: [
+      {
+        label: "Count",
+        data: [
+          totalAthletes || 0,
+          totalCoaches || 0,
+          totalGenders || 0,
+          totalMedals || 0,
+        ],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        borderColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Tokyo Olympics Analysis",
+      },
+    },
+  };
+
   return (
-    <div className="flex h-full bg-primaryBackground text-primaryText">
-      <div className="w-1/3 p-4">
+    <div className="flex flex-col md:flex-row h-full bg-primaryBackground text-primaryText">
+      <div className="w-full md:w-1/3 p-4">
         <div>
           <label
             htmlFor="sports"
@@ -242,7 +292,7 @@ const TokyoOlympicsAnalysis = () => {
           </select>
         </div>
       </div>
-      <div className="w-2/3 p-4">
+      <div className="w-full md:w-2/3 p-4">
         {totalAthletes !== null && (
           <div>
             <h2 className="mt-3 text-xl font-bold">Athletes Information</h2>
@@ -279,6 +329,14 @@ const TokyoOlympicsAnalysis = () => {
             </p>
           </div>
         )}
+        {totalMedals !== null &&
+          totalGenders !== null &&
+          totalCoaches !== null &&
+          totalAthletes !== null && (
+            <div className="mt-8 min-h-[600px] min-w-[600px] max-h-[600px] max-w-[600px]">
+              <Bar data={data} options={options} />
+            </div>
+          )}
       </div>
     </div>
   );
