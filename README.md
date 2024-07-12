@@ -18,7 +18,7 @@ Our backend API is built using FastAPI, with data analysis performed using Panda
 - **Tech Stack**: FastAPI, Pandas, PyTorch, Scikit-Learn
 
 #### API Routes
-- All the API routes are `GET` accessible, refer to the [API Docs](https://api.tryretrorings.xyz/docs) for info about available endpoints.
+- All the API routes are `GET` accessible, refer to the [API Docs](http://130.61.15.4:3001/docs) for info about available endpoints.
 
 ### Data Visualization UI
 Our frontend application is built using Next.js, React, and TailwindCSS, with Chart.js for data visualization. It provides an intuitive interface to visualize the predictions from our API.
@@ -37,8 +37,8 @@ Our frontend application is built using Next.js, React, and TailwindCSS, with Ch
 
 1. **Clone the repository**
     ```sh
-    git clone https://github.com/AndreiBalan-dev/RetroRings.git
-    cd RetroRings
+    git clone https://github.com/AndreiBalan-dev/tryCatchUs.git
+    cd tryCatchUs
     ```
 
 2. **Backend (API) Setup**
