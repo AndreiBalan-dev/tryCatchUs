@@ -12,6 +12,8 @@ interface DataResponse {
   countries: string[];
   sports: string[];
   genders: string[];
+  min_rank: number;
+  max_rank: number;
 }
 
 interface AthletesData {
@@ -26,16 +28,24 @@ interface GendersData {
   total: number;
 }
 
+interface MedalsData {
+  total: number;
+}
+
 const TokyoOlympicsAnalysis = () => {
   const [totalAthletes, setTotalAthletes] = useState<number | null>(null);
   const [totalCoaches, setTotalCoaches] = useState<number | null>(null);
   const [totalGenders, setTotalGenders] = useState<number | null>(null);
+  const [totalMedals, setTotalMedals] = useState<number | null>(null);
   const [countries, setCountries] = useState<string[]>([]);
   const [sports, setSports] = useState<string[]>([]);
   const [genders, setGenders] = useState<string[]>([]);
   const [selectedSport, setSelectedSport] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedGender, setSelectedGender] = useState<string>("");
+  const [minRank, setMinRank] = useState<number | null>(null);
+  const [maxRank, setMaxRank] = useState<number | null>(null);
+  const [selectedRank, setSelectedRank] = useState<number | null>(null);
 
   const fetchData = async () => {
     const resp = await fetch(`${apiConfig.api}/2021/get/athletes`, {
@@ -49,8 +59,8 @@ const TokyoOlympicsAnalysis = () => {
     setCountries(data.countries);
     setSports(data.sports);
 
-    // Fetch athletes and coaches count only once both filters are set
-    if (selectedSport && selectedCountry && selectedGender) {
+    // Fetch data only once all filters are set
+    if (selectedSport && selectedCountry && selectedGender && selectedRank) {
       const athletesResp = await fetch(
         `${apiConfig.api}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`,
         {
@@ -89,6 +99,19 @@ const TokyoOlympicsAnalysis = () => {
       const gendersData: GendersData = await gendersResp.json();
       console.log(gendersData);
       setTotalGenders(gendersData.total);
+
+      const medalsResp = await fetch(
+        `${apiConfig.api}/2021/medals?country=${selectedCountry}&rank=${selectedRank}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const medalsData: MedalsData = await medalsResp.json();
+      console.log(medalsData);
+      setTotalMedals(medalsData.total);
     }
   };
 
@@ -110,13 +133,23 @@ const TokyoOlympicsAnalysis = () => {
       });
       const dataGenders: DataResponse = await respGenders.json();
 
+      const respMedals = await fetch(`${apiConfig.api}/2021/get/medals`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const dataMedals: DataResponse = await respMedals.json();
+
       setCountries(dataAthletes.countries);
       setSports(dataAthletes.sports);
       setGenders(dataGenders.genders);
+      setMinRank(dataMedals.min_rank);
+      setMaxRank(dataMedals.max_rank);
     };
     fetchInitialData();
     fetchData();
-  }, [selectedSport, selectedCountry, selectedGender]);
+  }, [selectedSport, selectedCountry, selectedGender, selectedRank]);
 
   return (
     <div className="flex h-full bg-primaryBackground text-primaryText">
@@ -184,6 +217,30 @@ const TokyoOlympicsAnalysis = () => {
             ))}
           </select>
         </div>
+        <div className="mt-4">
+          <label
+            htmlFor="rank"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select a Rank
+          </label>
+          <select
+            id="rank"
+            value={selectedRank ?? ""}
+            onChange={(e) => setSelectedRank(Number(e.target.value))}
+            className="text-black mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option value="">-- Select a Rank --</option>
+            {Array.from(
+              { length: (maxRank || 0) - (minRank || 0) + 1 },
+              (_, i) => (
+                <option key={i} value={minRank! + i}>
+                  {minRank! + i}
+                </option>
+              )
+            )}
+          </select>
+        </div>
       </div>
       <div className="w-2/3 p-4">
         {totalAthletes !== null && (
@@ -210,6 +267,15 @@ const TokyoOlympicsAnalysis = () => {
             <p>
               <strong>Total Participants:</strong> {totalGenders}{" "}
               {selectedGender} participants in {selectedSport}.
+            </p>
+          </div>
+        )}
+        {totalMedals !== null && (
+          <div>
+            <h2 className="mt-6 text-xl font-bold">Medals Information</h2>
+            <p>
+              <strong>Total Medals:</strong> {totalMedals} medals for{" "}
+              {selectedCountry} with rank {selectedRank}.
             </p>
           </div>
         )}
