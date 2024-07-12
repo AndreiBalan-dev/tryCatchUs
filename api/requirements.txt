@@ -1,3 +1,4 @@
+torch
 pandas
 openpyxl
 fastapi
