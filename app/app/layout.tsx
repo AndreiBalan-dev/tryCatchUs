@@ -8,9 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 const pressStart2P = Press_Start_2P({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Olympics Paris 2024 Analysis and Predictions",
+  title: "Retro Rings: Paris Olympics | 2024 Analysis and Predictions",
   description:
-    "Welcome to the ultimate analysis and prediction site for the Paris 2024 Olympics!",
+    "Hey? What are you doing. Join us to Analyze & Predict the Paris 2024 Olympics, in an 8-bit RPG vibe!",
 };
 
 export default function RootLayout({

@@ -160,7 +160,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToRef }) => {
             isInView ? "animate__animated animate__fadeInDown" : ""
           }`}
         >
-          Welcome to RPG Olympics!
+          Welcome to RetroRings!
         </h1>
         <p
           className={`text-lg sm:text-xl md:text-2xl text-center mb-4 sm:mb-6 md:mb-8 text-white drop-shadow-md ${
