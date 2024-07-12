@@ -219,9 +219,40 @@ const Predictions = () => {
             <form onSubmit={handleFormSubmit}>
               <Select
                 options={[
-                  { value: "Japan", label: "Japan" },
-                  { value: "United%20States%20of%20America", label: "USA" },
-                  // Add more options as needed
+                  { "value": "Belgium", "label": "Belgium" },
+                  { "value": "People's%20Republic%20of%20China", "label": "People's Republic of China" },
+                  { "value": "France", "label": "France" },
+                  { "value": "Italy", "label": "Italy" },
+                  { "value": "Japan", "label": "Japan" },
+                  { "value": "Latvia", "label": "Latvia" },
+                  { "value": "Mongolia", "label": "Mongolia" },
+                  { "value": "Netherlands", "label": "Netherlands" },
+                  { "value": "Poland", "label": "Poland" },
+                  { "value": "ROC", "label": "ROC" },
+                  { "value": "Serbia", "label": "Serbia" },
+                  { "value": "United%20States%20of%20America", "label": "United States of America" },
+                  { "value": "Australia", "label": "Australia" },
+                  { "value": "Brazil", "label": "Brazil" },
+                  { "value": "Spain", "label": "Spain" },
+                  { "value": "Argentina", "label": "Argentina" },
+                  { "value": "Germany", "label": "Germany" },
+                  { "value": "Nigeria", "label": "Nigeria" },
+                  { "value": "Canada", "label": "Canada" },
+                  { "value": "Venezuela", "label": "Venezuela" },
+                  { "value": "Czech%20Republic", "label": "Czech Republic" },
+                  { "value": "Turkey", "label": "Turkey" },
+                  { "value": "Iran", "label": "Iran" },
+                  { "value": "Philippines", "label": "Philippines" },
+                  { "value": "New%20Zealand", "label": "New Zealand" },
+                  { "value": "Puerto%20Rico", "label": "Puerto Rico" },
+                  { "value": "Slovenia", "label": "Slovenia" },
+                  { "value": "United%20States%20Virgin%20Islands", "label": "United States Virgin Islands" },
+                  { "value": "Angola", "label": "Angola" },
+                  { "value": "South%20Korea", "label": "South Korea" },
+                  { "value": "Tunisia", "label": "Tunisia" },
+                  { "value": "Greece", "label": "Greece" },
+                  { "value": "Lithuania", "label": "Lithuania" },
+                  { "value": "Romania", "label": "Romania" }
                 ]}
                 value={country}
                 onChange={handleCountryChange}
