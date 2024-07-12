@@ -17,8 +17,13 @@ interface AthletesData {
   total: number;
 }
 
+interface CoachesData {
+  total: number;
+}
+
 const TokyoOlympicsAnalysis = () => {
   const [totalAthletes, setTotalAthletes] = useState<number | null>(null);
+  const [totalCoaches, setTotalCoaches] = useState<number | null>(null);
   const [countries, setCountries] = useState<string[]>([]);
   const [sports, setSports] = useState<string[]>([]);
   const [selectedSport, setSelectedSport] = useState<string>("");
@@ -35,7 +40,8 @@ const TokyoOlympicsAnalysis = () => {
 
     setCountries(data.countries);
     setSports(data.sports);
-    // Fetch athletes count only once both filters are set
+
+    // Fetch athletes and coaches count only once both filters are set
     if (selectedSport && selectedCountry) {
       const athletesResp = await fetch(
         `${apiConfig.api}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`,
@@ -49,10 +55,35 @@ const TokyoOlympicsAnalysis = () => {
       const athletesData: AthletesData = await athletesResp.json();
       console.log(athletesData);
       setTotalAthletes(athletesData.total);
+
+      const coachesResp = await fetch(
+        `${apiConfig.api}/2021/coaches?sport=${selectedSport}&country=${selectedCountry}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const coachesData: CoachesData = await coachesResp.json();
+      console.log(coachesData);
+      setTotalCoaches(coachesData.total);
     }
   };
 
   useEffect(() => {
+    const fetchInitialData = async () => {
+      const resp = await fetch(`${apiConfig.api}/2021/get/coaches`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data: DataResponse = await resp.json();
+      setCountries(data.countries);
+      setSports(data.sports);
+    };
+    fetchInitialData();
     fetchData();
   }, [selectedSport, selectedCountry]);
 
@@ -109,6 +140,15 @@ const TokyoOlympicsAnalysis = () => {
             <p>
               <strong>Total Athletes:</strong> {totalAthletes} athletes from{" "}
               {selectedCountry} participating in {selectedSport}.
+            </p>
+          </div>
+        )}
+        {totalCoaches !== null && (
+          <div>
+            <h2 className="text-xl font-bold">Coaches Information</h2>
+            <p>
+              <strong>Total Coaches:</strong> {totalCoaches} coaches from{" "}
+              {selectedCountry} coaching in {selectedSport}.
             </p>
           </div>
         )}
