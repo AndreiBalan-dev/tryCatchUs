@@ -122,7 +122,7 @@ const Predictions = () => {
       });
 
       console.log("Prediction response:", response.data);
-      setPrediction((parseFloat(response.data.prediction) / 1000).toFixed(3));
+      setPrediction(String((parseFloat(response.data.prediction) / 1000).toFixed(3)));
       setIsFormVisible(false);
       setIsPredictionVisible(true);
     } catch (error) {
