@@ -6,7 +6,7 @@
   border-radius: 5px;
   position: relative;
   z-index: 10;
-  height: 140px;
+  height: 110px;
 }
 
 .dialog-box::before {
