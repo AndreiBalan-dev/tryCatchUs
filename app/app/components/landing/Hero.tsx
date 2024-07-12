@@ -13,24 +13,56 @@ import "../../styles/dialogbox.css";
 const Hero = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [canResetWithoutClosing, setCanResetWithoutClosing] = useState(true);
+  const [triggerAgain, setTriggerAgain] = useState(false);
+  const [lastIndex, setLastIndex] = useState(-1);
+
+  const getRandomMessage = (lastIndex: number) => {
+    const messagesArray = [
+      "Hello there! Ready for the adventure?",
+      "Let's dive into the world of Olympics Paris 2024!",
+      "Curious about the latest predictions? Click away!",
+      "Want to explore some in-depth analysis? Let's go!",
+      "Need more information? Feel free to ask anything!",
+    ];
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * messagesArray.length);
+    } while (randomIndex === lastIndex);
+    return { message: messagesArray[randomIndex], index: randomIndex };
+  };
 
   useEffect(() => {
     if (isDialogOpen) {
-      const fullMessage = "Hello there! Ready for the adventure?";
+      setCanResetWithoutClosing(false);
+      const { message: fullMessage, index: newIndex } =
+        getRandomMessage(lastIndex);
+      setLastIndex(newIndex);
       let index = 0;
       const interval = setInterval(() => {
         setMessage((prev) => prev + fullMessage[index]);
         index++;
-        if (index === fullMessage.length) clearInterval(interval);
-      }, 100);
+        if (index === fullMessage.length) {
+          clearInterval(interval);
+          setCanResetWithoutClosing(true);
+        }
+      }, 80);
       return () => clearInterval(interval);
     } else {
       setMessage("");
     }
-  }, [isDialogOpen]);
+  }, [isDialogOpen, triggerAgain]);
 
   const handleDialog = () => {
+    setMessage("");
+    setTriggerAgain(!triggerAgain);
     setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setMessage("");
+    setCanResetWithoutClosing(true);
+    setIsDialogOpen(false);
   };
 
   return (
@@ -44,7 +76,10 @@ const Hero = () => {
             <div className="">
               <div className="relative group">
                 {isDialogOpen && (
-                  <div className="dialog-box text-black absolute left-full bottom-full min-w-60">
+                  <div
+                    className="dialog-box text-black absolute left-full bottom-full min-w-60"
+                    onClick={handleCloseDialog}
+                  >
                     {message}
                   </div>
                 )}
