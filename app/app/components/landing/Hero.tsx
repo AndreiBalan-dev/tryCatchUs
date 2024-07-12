@@ -13,7 +13,6 @@ import "../../styles/dialogbox.css";
 const Hero = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [canResetWithoutClosing, setCanResetWithoutClosing] = useState(true);
   const [triggerAgain, setTriggerAgain] = useState(false);
   const [lastIndex, setLastIndex] = useState(-1);
 
@@ -34,7 +33,6 @@ const Hero = () => {
 
   useEffect(() => {
     if (isDialogOpen) {
-      setCanResetWithoutClosing(false);
       const { message: fullMessage, index: newIndex } =
         getRandomMessage(lastIndex);
       setLastIndex(newIndex);
@@ -44,7 +42,6 @@ const Hero = () => {
         index++;
         if (index === fullMessage.length) {
           clearInterval(interval);
-          setCanResetWithoutClosing(true);
         }
       }, 80);
       return () => clearInterval(interval);
@@ -61,27 +58,32 @@ const Hero = () => {
 
   const handleCloseDialog = () => {
     setMessage("");
-    setCanResetWithoutClosing(true);
     setIsDialogOpen(false);
   };
+  useEffect(() => {
+    function handleResize() {
+      const dialogBox = document.getElementById("dialogBox");
+      const windowWidth = window.innerWidth;
 
-  function handleResize() {
-    const dialogBox = document.getElementById("dialogBox");
-    const windowWidth = window.innerWidth;
+      if (!dialogBox) return;
 
-    if (windowWidth < 600 && dialogBox) {
-      dialogBox.classList.remove("left-full");
-      dialogBox.classList.add("bottom-40");
-      dialogBox.classList.add("-right-14");
-    } else if (dialogBox) {
-      dialogBox.classList.remove("bottom-40");
-      dialogBox.classList.remove("-right-14");
-      dialogBox.classList.add("left-full");
+      if (windowWidth < 600) {
+        dialogBox.classList.remove("left-full");
+        dialogBox.classList.add("bottom-40");
+        dialogBox.classList.add("-right-14");
+        dialogBox.classList.add("-top-32");
+      } else {
+        dialogBox.classList.remove("bottom-40");
+        dialogBox.classList.remove("-right-14");
+        dialogBox.classList.add("left-full");
+      }
     }
-  }
 
-  window.addEventListener("resize", handleResize);
-  handleResize();
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <TooltipProvider delayDuration={0}>
