@@ -14,6 +14,7 @@ medals = pd.read_excel("datasets/2021/Medals.xlsx")
 def root():
     return {"status": "ok", "dataset": "Tokyo Olympics 2021"}
 
+# Get's placeholder data for filters
 @router.get("/get/{data}")
 def get_data(data: str):
     if data == "athletes":
