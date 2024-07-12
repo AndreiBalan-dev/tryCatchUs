@@ -27,7 +27,7 @@ interface EventsDataResponse {
   sports: {
     [key: string]: {
       events: string[];
-      no_of_events: number;
+      total: number;
     };
   };
 }
@@ -40,17 +40,21 @@ const ParisOlympicsAnalysis = () => {
   >(null);
 
   const fetchData = async () => {
-    const resp = await fetch(`${apiConfig.api}/2024/get/events`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data: EventsDataResponse = await resp.json();
-
-    setTotalSports(data.total_sports);
-    setTotalEvents(data.total_events);
-    setSportsData(data.sports);
+    try {
+      const resp = await fetch(`${apiConfig.api}/2024/get/events`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data: EventsDataResponse = await resp.json();
+      console.log(data);
+      setTotalSports(data.total_sports);
+      setTotalEvents(data.total_events);
+      setSportsData(data.sports);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -63,7 +67,7 @@ const ParisOlympicsAnalysis = () => {
       {
         label: "Number of Events",
         data: sportsData
-          ? Object.values(sportsData).map((sport) => sport.no_of_events)
+          ? Object.values(sportsData).map((sport) => sport.total)
           : [],
         backgroundColor: "#36A2EB",
         borderColor: "#36A2EB",
