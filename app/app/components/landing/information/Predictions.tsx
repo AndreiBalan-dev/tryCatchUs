@@ -297,7 +297,7 @@ const Predictions = () => {
               X
             </button>
             <h2 className="text-xl mb-4">Here is the prediction value:</h2>
-            <p className="text-lg">It's: {prediction}</p>
+            <p className="text-lg">{prediction}!</p>
             <p style={{ fontSize: "12px" }}>
               <i>
                 The prediction score is calculated by our model based on past
