@@ -85,34 +85,6 @@ def get_genders(sport: Union[str, None] = None, gender: Union[str, None] = None)
     return {"total": total}
 
 
-import pandas as pd
-from fastapi import APIRouter
-from typing import Union
-
-router = APIRouter()
-
-athletes = pd.read_excel("datasets/2021/Athletes.xlsx")
-coaches = pd.read_excel("datasets/2021/Coaches.xlsx")
-genders = pd.read_excel("datasets/2021/EntriesGender.xlsx")
-medals = pd.read_excel("datasets/2021/Medals.xlsx")
-
-# Root endpoint for the Tokyo Olympics 2021 dataset
-@router.get("/")
-def root():
-    return {"status": "ok", "dataset": "Tokyo Olympics 2021"}
-
-@router.get("/get/{data}")
-def get_data(data: str):
-    if data == "athletes":
-        return {"countries": sorted(athletes["NOC"].unique().tolist()), "sports": sorted(athletes["Discipline"].unique().tolist())}
-    elif data == "coaches":
-        return {"countries": sorted(coaches["NOC"].unique().tolist()), "sports": sorted(coaches["Discipline"].unique().tolist())}
-    elif data == "genders":
-        return {"genders": ["Male", "Female"], "sports": sorted(genders["Discipline"].unique().tolist())}
-    else:
-        return {}
-
-
 @router.get("/athletes")
 def get_athletes(country: Union[str, None] = None, sport: Union[str, None] = None):
     conditions = []
@@ -176,7 +148,7 @@ def get_medals(country: str = None, rank: int = None):
 
     if country:
         conditions.append(medals["Team/NOC"] == country)
-    if rank is not None:
+    if rank:
         conditions.append(medals["Rank"] == rank)
 
     if conditions:
@@ -189,5 +161,6 @@ def get_medals(country: str = None, rank: int = None):
     gold = sum(filtered["Gold"].tolist())
     silver = sum(filtered["Silver"].tolist())
     bronze = sum(filtered["Bronze"].tolist())
+    total = gold + silver + bronze
 
-    return {"Gold": gold, "Silver": silver, "Bronze": bronze}
+    return {"total": total, "gold": gold, "silver": silver, "bronze": bronze}
