@@ -65,6 +65,24 @@ const Hero = () => {
     setIsDialogOpen(false);
   };
 
+  function handleResize() {
+    const dialogBox = document.getElementById("dialogBox");
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth < 600 && dialogBox) {
+      dialogBox.classList.remove("left-full");
+      dialogBox.classList.add("bottom-40");
+      dialogBox.classList.add("-right-14");
+    } else if (dialogBox) {
+      dialogBox.classList.remove("bottom-40");
+      dialogBox.classList.remove("-right-14");
+      dialogBox.classList.add("left-full");
+    }
+  }
+
+  window.addEventListener("resize", handleResize);
+  handleResize();
+
   return (
     <TooltipProvider delayDuration={0}>
       <section
@@ -77,8 +95,9 @@ const Hero = () => {
               <div className="relative group">
                 {isDialogOpen && (
                   <div
-                    className="dialog-box text-black absolute left-full bottom-full min-w-60"
+                    className="dialog-box text-black absolute left-full bottom-full min-w-60 max-w-xs p-2 text-sm transition-all duration-300"
                     onClick={handleCloseDialog}
+                    id="dialogBox"
                   >
                     {message}
                   </div>
