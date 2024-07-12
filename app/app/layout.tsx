@@ -20,8 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} cursor-default`}>
-        <Main fontClass={pressStart2P.className} />
+      <body className={`${pressStart2P.className} cursor-default`}>
+        {/* <Main fontClass={pressStart2P.className} /> */}
+        { children }
         <Footer fontClass={pressStart2P.className} />
       </body>
     </html>
