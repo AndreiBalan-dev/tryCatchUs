@@ -11,6 +11,7 @@ interface Athlete {
 interface DataResponse {
   countries: string[];
   sports: string[];
+  genders: string[];
 }
 
 interface AthletesData {
@@ -21,13 +22,20 @@ interface CoachesData {
   total: number;
 }
 
+interface GendersData {
+  total: number;
+}
+
 const TokyoOlympicsAnalysis = () => {
   const [totalAthletes, setTotalAthletes] = useState<number | null>(null);
   const [totalCoaches, setTotalCoaches] = useState<number | null>(null);
+  const [totalGenders, setTotalGenders] = useState<number | null>(null);
   const [countries, setCountries] = useState<string[]>([]);
   const [sports, setSports] = useState<string[]>([]);
+  const [genders, setGenders] = useState<string[]>([]);
   const [selectedSport, setSelectedSport] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedGender, setSelectedGender] = useState<string>("");
 
   const fetchData = async () => {
     const resp = await fetch(`${apiConfig.api}/2021/get/athletes`, {
@@ -42,7 +50,7 @@ const TokyoOlympicsAnalysis = () => {
     setSports(data.sports);
 
     // Fetch athletes and coaches count only once both filters are set
-    if (selectedSport && selectedCountry) {
+    if (selectedSport && selectedCountry && selectedGender) {
       const athletesResp = await fetch(
         `${apiConfig.api}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`,
         {
@@ -68,24 +76,47 @@ const TokyoOlympicsAnalysis = () => {
       const coachesData: CoachesData = await coachesResp.json();
       console.log(coachesData);
       setTotalCoaches(coachesData.total);
+
+      const gendersResp = await fetch(
+        `${apiConfig.api}/2021/genders?sport=${selectedSport}&gender=${selectedGender}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const gendersData: GendersData = await gendersResp.json();
+      console.log(gendersData);
+      setTotalGenders(gendersData.total);
     }
   };
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      const resp = await fetch(`${apiConfig.api}/2021/get/coaches`, {
+      const respAthletes = await fetch(`${apiConfig.api}/2021/get/athletes`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const data: DataResponse = await resp.json();
-      setCountries(data.countries);
-      setSports(data.sports);
+      const dataAthletes: DataResponse = await respAthletes.json();
+
+      const respGenders = await fetch(`${apiConfig.api}/2021/get/genders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const dataGenders: DataResponse = await respGenders.json();
+
+      setCountries(dataAthletes.countries);
+      setSports(dataAthletes.sports);
+      setGenders(dataGenders.genders);
     };
     fetchInitialData();
     fetchData();
-  }, [selectedSport, selectedCountry]);
+  }, [selectedSport, selectedCountry, selectedGender]);
 
   return (
     <div className="flex h-full bg-primaryBackground text-primaryText">
@@ -132,11 +163,32 @@ const TokyoOlympicsAnalysis = () => {
             ))}
           </select>
         </div>
+        <div className="mt-4">
+          <label
+            htmlFor="genders"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Select a Gender
+          </label>
+          <select
+            id="genders"
+            value={selectedGender}
+            onChange={(e) => setSelectedGender(e.target.value)}
+            className="text-black mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option value="">-- Select a Gender --</option>
+            {genders.map((gender, index) => (
+              <option key={index} value={gender}>
+                {gender}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="w-2/3 p-4">
         {totalAthletes !== null && (
           <div>
-            <h2 className="text-xl font-bold">Athletes Information</h2>
+            <h2 className="mt-3 text-xl font-bold">Athletes Information</h2>
             <p>
               <strong>Total Athletes:</strong> {totalAthletes} athletes from{" "}
               {selectedCountry} participating in {selectedSport}.
@@ -145,10 +197,19 @@ const TokyoOlympicsAnalysis = () => {
         )}
         {totalCoaches !== null && (
           <div>
-            <h2 className="text-xl font-bold">Coaches Information</h2>
+            <h2 className="mt-6 text-xl font-bold">Coaches Information</h2>
             <p>
               <strong>Total Coaches:</strong> {totalCoaches} coaches from{" "}
               {selectedCountry} coaching in {selectedSport}.
+            </p>
+          </div>
+        )}
+        {totalGenders !== null && (
+          <div>
+            <h2 className="mt-6 text-xl font-bold">Gender Information</h2>
+            <p>
+              <strong>Total Participants:</strong> {totalGenders}{" "}
+              {selectedGender} participants in {selectedSport}.
             </p>
           </div>
         )}
