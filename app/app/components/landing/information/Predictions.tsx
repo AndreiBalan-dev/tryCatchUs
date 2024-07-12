@@ -30,7 +30,7 @@ const Predictions = () => {
           Our expert predictions for the outcomes of the games.
         </p>
       </div>
-      <div className="relative mw-full max-w-5xl flex items-center justify-center space-x-4 flex-wrap space-y-4 sm:space-y-0 sm:flex-nowrap">
+      <div className="min-w-[300px] sm:mr-0 relative mw-full max-w-5xl flex items-center justify-center space-x-4 flex-wrap space-y-4 sm:space-y-0 sm:flex-nowrap">
         {images.map((src, index) => {
           let positionClass = "";
           if (index === currentImageIndex) {
@@ -47,13 +47,13 @@ const Predictions = () => {
           return (
             <div
               key={index}
-              className={`transition-all duration-500 transform ${positionClass} w-2/3 sm:w-1/2 md:w-1/3`}
+              className={`min-w-[300px] transition-all duration-500 transform ${positionClass} w-2/3 sm:w-1/2 md:w-1/3`}
             >
               <Image
                 src={src}
                 alt={`Prediction ${index + 1}`}
                 width={500}
-                height={600}
+                height={500}
                 className="rounded-lg shadow-lg object-cover min-w-[250px]"
               />
             </div>
