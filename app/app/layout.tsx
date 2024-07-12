@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${pressStart2P.className} cursor-default`}>
         {/* <Main fontClass={pressStart2P.className} /> */}
-        { children }
+        {children}
         <Footer fontClass={pressStart2P.className} />
       </body>
     </html>
