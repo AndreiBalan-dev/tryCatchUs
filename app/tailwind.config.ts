@@ -14,8 +14,10 @@ const config: Config = {
       colors: {
         primaryBackground: "#001524",
         primaryText: "#FAFAFF",
-        primaryButton: "#273469",
-        primaryButtonHover: "#1E2749",
+        secondaryText: "#000000",
+        primaryButton: "#FFFD01",
+        primaryButtonHover: "#E5D700",
+        primaryButtonBorder: "#141414"
       },
     },
   },
