@@ -1,11 +1,16 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import apiConfig from "../../apiConfig.json"
+import apiConfig from "../../apiConfig.json";
 
 interface Athlete {
   name: string;
   sport: string;
   country: string;
+}
+
+interface DataResponse {
+  countries: string[];
+  sports: string[];
 }
 
 const TokyoOlympicsAnalysis = () => {
@@ -17,33 +22,33 @@ const TokyoOlympicsAnalysis = () => {
   const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
 
   const fetchData = async () => {
-    const resp = await fetch(`${apiConfig.api}/2021/athletes`, {
+    const resp = await fetch(`${apiConfig.api}/2021/get/athletes`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    const data: Athlete[] = await resp.json();
-    setAthletes(data);
-
-    const uniqueCountries = Array.from(new Set(data.map(athlete => athlete.country)));
-    setCountries(uniqueCountries);
-
-    const uniqueSports = Array.from(new Set(data.map(athlete => athlete.sport)));
-    setSports(uniqueSports);
+    const data: DataResponse = await resp.json();
+    
+    setCountries(data.countries);
+    setSports(data.sports);
+    // Fetch athletes only once both filters are set
+    if (selectedSport && selectedCountry) {
+      const athletesResp = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/2021/athletes?sport=${selectedSport}&country=${selectedCountry}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const athletesData: Athlete[] = await athletesResp.json();
+      setAthletes(athletesData);
+      setFilteredAthletes(athletesData);
+    }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const filtered = athletes.filter(athlete => 
-      (selectedSport ? athlete.sport === selectedSport : true) &&
-      (selectedCountry ? athlete.country === selectedCountry : true)
-    );
-    setFilteredAthletes(filtered);
-  }, [selectedSport, selectedCountry, athletes]);
+  }, [selectedSport, selectedCountry]);
 
   return (
     <div className='flex h-full bg-primaryBackground text-black'>
