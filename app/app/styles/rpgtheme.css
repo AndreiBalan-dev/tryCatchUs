@@ -1,0 +1,55 @@
+.rpg-box {
+  padding: 20px;
+  background: linear-gradient(135deg, #062330, #001524);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  position: relative;
+  z-index: 10;
+  height: auto;
+}
+
+.rpg-box::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: translate(10px, 10px);
+  border-radius: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.rpg-box::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  transform: translate(20px, 20px);
+  border-radius: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  background: transparent;
+}
+
+.shadow-gray-500 {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rpg-box {
+    padding: 16px;
+  }
+
+  .rpg-box p {
+    margin-bottom: 16px;
+  }
+
+  .rpg-box button {
+    margin-top: 16px;
+  }
+}

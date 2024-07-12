@@ -13,6 +13,7 @@ const config: Config = {
       },
       colors: {
         primaryBackground: "#001524",
+        secondaryBackground: "#002B3C",
         primaryText: "#FAFAFF",
         secondaryText: "#000000",
         primaryButton: "#FFFD01",
