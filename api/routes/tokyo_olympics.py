@@ -7,6 +7,7 @@ router = APIRouter()
 athletes = pd.read_excel("datasets/2021/Athletes.xlsx")
 coaches = pd.read_excel("datasets/2021/Coaches.xlsx")
 genders = pd.read_excel("datasets/2021/EntriesGender.xlsx")
+medals = pd.read_excel("datasets/2021/Medals.xlsx")
 
 # Root endpoint for the Tokyo Olympics 2021 dataset
 @router.get("/")
@@ -21,6 +22,8 @@ def get_data(data: str):
         return {"countries": sorted(coaches["NOC"].unique().tolist()), "sports": sorted(coaches["Discipline"].unique().tolist())}
     elif data == "genders":
         return {"genders": ["Male", "Female"], "sports": sorted(genders["Discipline"].unique().tolist())}
+    elif data == "medals":
+        return {"min_rank": min(medals["Rank"].tolist()), "max_rank": max(medals["Rank"].tolist()), "countries": sorted(medals["Team/NOC"].unique().tolist())}
     else:
         return {}
 
@@ -86,9 +89,3 @@ def get_genders(sport: Union[str, None] = None, gender: Union[str, None] = None)
 def get_medals():
     # This is just a placeholder. You can replace it with actual data or logic.
     return {"medals": ["Gold", "Silver", "Bronze"]}
-
-
-@router.get("/teams")
-def get_teams():
-    # This is just a placeholder. You can replace it with actual data or logic.
-    return {"teams": ["Team 1", "Team 2", "Team 3"]}
