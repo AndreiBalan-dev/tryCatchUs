@@ -172,7 +172,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToRef }) => {
         <button
           id="heroButton"
           onClick={scrollToAnalysis}
-          className={`bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 ${
+          className={`bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 ${
             isInView ? "animate__animated animate__pulse animate__infinite" : ""
           }`}
         >

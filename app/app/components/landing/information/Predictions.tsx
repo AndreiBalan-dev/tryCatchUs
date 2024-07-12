@@ -75,7 +75,7 @@ const Predictions = () => {
       </div>
       <div className="mt-8 md:mt-16">
         <p>Click the button below!</p>
-        <button className="mt-4 md:mt-10 bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 animate__animated animate__pulse">
+        <button className="mt-4 md:mt-10 bg-primaryButton border-primaryButton cursor-pointer text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 animate__animated animate__pulse">
           Learn More
         </button>
       </div>

@@ -45,7 +45,7 @@ const Analysis: React.FC<AnalysisProps> = ({ scrollToRef }) => {
             Vivamus pellentesque cursus dolor, non facilisis sapien varius nec.
             Suspendisse potenti.
           </p>
-          <button className="mt-4 md:mt-10 bg-primaryButton border-primaryButton text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 custom-pulse">
+          <button className="mt-4 md:mt-10 bg-primaryButton border-primaryButton cursor-pointer text-black py-2 px-4 sm:py-3 sm:px-6 rounded-full shadow-lg hover:bg-primaryButtonHover transition duration-300 ease-in-out transform hover:scale-105 custom-pulse">
             Read More
           </button>
         </div>

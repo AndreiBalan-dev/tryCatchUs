@@ -23,7 +23,7 @@ const Contact = () => {
         <p className="text-lg mb-8">
           Get in touch with our team for more information.
         </p>
-        <button className="bg-primaryButton text-secondaryText hover:bg-primaryButtonHover py-4 px-8 rounded-full shadow-lg border-2 border-primaryButtonBorder animate__animated animate__pulse">
+        <button className="bg-primaryButton text-secondaryText cursor-pointer hover:bg-primaryButtonHover py-4 px-8 rounded-full shadow-lg border-2 border-primaryButtonBorder animate__animated animate__pulse">
           Contact Us
         </button>
       </div>
