@@ -30,3 +30,7 @@
   background: transparent;
   z-index: 20;
 }
+
+.delay-1 {
+  animation-delay: 0.3s;
+}
