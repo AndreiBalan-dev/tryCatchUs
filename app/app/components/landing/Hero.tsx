@@ -84,7 +84,7 @@ const Hero = () => {
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isDialogOpen]);
 
   return (
     <TooltipProvider delayDuration={0}>
