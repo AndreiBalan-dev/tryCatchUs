@@ -11,8 +11,9 @@ app.include_router(tokyo_olympics.router, prefix="/2021", tags=['Tokyo Olympics'
 app.include_router(paris_olympics.router, prefix="/2024", tags=['Paris Olympics'])
 
 model = OlympicPredictorNN(num_features=5)
-model.load_state_dict(torch.load('models/weights/olympic_win_predictor_2021.pth'))
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu") # CPU for inferences since server might not have GPU
+model.load_state_dict(torch.load('models/weights/olympic_win_predictor_2021.pth', map_location=device))
 
 model.to(device)
 
