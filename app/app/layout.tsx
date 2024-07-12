@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} cursor-default`}>
         <Main fontClass={pressStart2P.className} />
         <Footer fontClass={pressStart2P.className} />
       </body>
