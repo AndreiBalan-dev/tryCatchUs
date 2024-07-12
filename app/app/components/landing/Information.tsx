@@ -4,10 +4,10 @@ import Predictions from "./information/Predictions";
 
 const Information = () => {
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <Analysis />
       <Predictions />
-    </>
+    </div>
   );
 };
 
