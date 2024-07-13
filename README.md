@@ -6,7 +6,7 @@ Welcome to **RetroRings**, an RPG-themed project developed by team **try{CatchUs
 - [@AndreiBalan-dev](https://github.com/AndreiBalan-dev): Frontend Developer & API Integrations
 - [@TCYTseven](https://github.com/TCYTseven): Algorithmist & Model Designing
 
-## [Live Demo](https://www.tryretrorings.xyz/)
+## [Live Demo](https://try-catch-us.vercel.app/)
 Ready to analyze & predict the Olympics? Check out RetroRings in action!
 
 ## Project Structure
@@ -18,7 +18,7 @@ Our backend API is built using FastAPI, with data analysis performed using Panda
 - **Tech Stack**: FastAPI, Pandas, PyTorch, Scikit-Learn
 
 #### API Routes
-- All the API routes are `GET` accessible, refer to the [API Docs](http://130.61.15.4:3001/docs) for info about available endpoints.
+- All the API routes are `GET` accessible, refer to the [API Docs](https://trycatchus.onrender.com/docs) for info about available endpoints.
 
 ### Data Visualization UI
 Our frontend application is built using Next.js, React, and TailwindCSS, with Chart.js for data visualization. It provides an intuitive interface to visualize the predictions from our API.
