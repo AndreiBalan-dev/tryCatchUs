@@ -128,7 +128,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToRef }) => {
               <div className="relative group">
                 {isDialogOpen && (
                   <div
-                    className="dialog-box text-black absolute left-full bottom-full min-w-60 max-w-60 max-w-xs p-2 text-sm transition-all duration-300"
+                    className="dialog-box text-black absolute md:left-full right-14 -top-5 md:right-0 md:-top-0 max-w-32 bottom-full min-w-60 md:max-w-60 p-2 text-sm transition-all duration-300"
                     onClick={handleCloseDialog}
                     id="dialogBox"
                   >
