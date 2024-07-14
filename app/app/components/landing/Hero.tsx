@@ -125,10 +125,10 @@ const Hero: React.FC<HeroProps> = ({ scrollToRef }) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="">
-              <div className="relative group">
+              <div className="max-h-64 max-w-32 sm:max-h-fit sm:max-w-fit">
                 {isDialogOpen && (
                   <div
-                    className="dialog-box text-black absolute md:left-full right-14 -top-5 md:right-0 md:-top-0 max-w-32 bottom-full min-w-60 md:max-w-60 p-2 text-sm transition-all duration-300"
+                    className="dialog-box text-black absolute sm:left-full right-14 -top-5 sm:right-0 sm:-top-0 max-w-32 bottom-full min-w-60 sn:max-w-60 p-2 text-sm transition-all duration-300"
                     onClick={handleCloseDialog}
                     id="dialogBox"
                   >
