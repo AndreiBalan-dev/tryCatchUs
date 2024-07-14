@@ -6,6 +6,8 @@ Welcome to **RetroRings**, an RPG-themed project developed by team **try{CatchUs
 - [@AndreiBalan-dev](https://github.com/AndreiBalan-dev): Frontend Developer & API Integrations
 - [@TCYTseven](https://github.com/TCYTseven): Algorithmist & Model Designing
 
+### **This project was done in 24 hours.**
+
 ## [Live Demo](https://try-catch-us.vercel.app/)
 Ready to analyze & predict the Olympics? Check out RetroRings in action!
 
