@@ -8,7 +8,7 @@ Welcome to **RetroRings**, an RPG-themed project developed by team **try{CatchUs
 
 ### **This project was done in 24 hours.**
 
-## [Live Demo](https://try-catch-us.vercel.app/)
+## [Live Demo](https://www.tryretrorings.xyz/)
 Ready to analyze & predict the Olympics? Check out RetroRings in action!
 
 ## Project Structure
